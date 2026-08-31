@@ -48,12 +48,12 @@ def test_setdiff_factor():
     from biocutils import Factor
     f1 = Factor.from_sequence(["B", "B", "C", "A", "D", "D", "E"])
     f2 = Factor.from_sequence(["A", "A", "F", "F"])
-    
+
     out = setdiff(f1, f2)
     assert isinstance(out, Factor)
     assert out.as_list() == ["B", "C", "D", "E"]
     assert out.get_levels() == f1.get_levels()
-    
+
     out = setdiff(f1, f2, duplicate_method="last")
     assert isinstance(out, Factor)
     assert out.as_list() == ["B", "C", "D", "E"]

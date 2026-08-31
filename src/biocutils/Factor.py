@@ -877,9 +877,10 @@ def _combine_factors(*x: Factor):
         _validate=False,
     )
 
+
 from .setdiff import setdiff, _setdiff_internal
 from .map_to_index import DUPLICATE_METHOD
-from typing import Sequence
+
 
 @setdiff.register(Factor)
 def _setdiff_Factor(x: Factor, *other: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> Factor:

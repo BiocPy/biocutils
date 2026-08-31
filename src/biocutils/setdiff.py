@@ -6,6 +6,7 @@ from .map_to_index import DUPLICATE_METHOD
 
 from functools import singledispatch
 
+
 @singledispatch
 def _setdiff_internal(first: Sequence, *other: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> list:
     present = set()
@@ -31,10 +32,11 @@ def _setdiff_internal(first: Sequence, *other: Sequence, duplicate_method: DUPLI
 
     return output
 
+
 def setdiff(*x: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> list:
     """Identify the set difference of values in multiple sequences, preserves
     the order of values in the first sequence.
-    
+
     This is a :py:func:`~functools.singledispatch` generic, allowing developers
     to specify custom methods for their own classes.
 
@@ -58,5 +60,6 @@ def setdiff(*x: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> list:
         return []
 
     return _setdiff_internal(x[0], *x[1:], duplicate_method=duplicate_method)
+
 
 setdiff.register = _setdiff_internal.register
