@@ -1,4 +1,4 @@
-from typing import Sequence
+from collections.abc import Sequence
 
 from .is_missing_scalar import is_missing_scalar
 from .map_to_index import DUPLICATE_METHOD

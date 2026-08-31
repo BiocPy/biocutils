@@ -1,11 +1,11 @@
-from typing import Optional, Sequence
+from collections.abc import Sequence
 
 import numpy
 
 
 def which(
     x: Sequence,
-    dtype: Optional[numpy.dtype] = None,
+    dtype: numpy.dtype | None = None,
 ) -> numpy.ndarray:
     """Report the indices of all elements of ``x`` that are truthy.
 

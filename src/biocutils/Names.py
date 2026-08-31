@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Callable, Iterable, Sequence
 from copy import deepcopy
-from typing import Any, Callable, Iterable, List, Optional, Sequence, Union
+from typing import Any, Union
 
 from .assign_sequence import assign_sequence
 from .combine_sequences import combine_sequences
@@ -18,7 +19,7 @@ class Names:
     such that callers can get or set elements by name instead of position.
     """
 
-    def __init__(self, names: Optional[Iterable] = None, _validate: bool = True):
+    def __init__(self, names: Iterable | None = None, _validate: bool = True):
         """
         Args:
             names:
@@ -63,7 +64,7 @@ class Names:
         """
         return len(self._names)
 
-    def __iter__(self) -> "list_iterator":
+    def __iter__(self) -> list_iterator:
         """
         Returns:
             An iterator on the underlying list of names.
@@ -96,7 +97,7 @@ class Names:
             return False
         return self._names == other._names
 
-    def as_list(self) -> List[str]:
+    def as_list(self) -> list[str]:
         """
         Returns:
             List of strings containing the names.
@@ -160,7 +161,7 @@ class Names:
         index, scalar = normalize_subscript(index, len(self), None)
         return type(self)(subset_sequence(self._names, index), _validate=False)
 
-    def __getitem__(self, index: SubscriptTypes) -> Union[str, Names]:
+    def __getitem__(self, index: SubscriptTypes) -> str | Names:
         """
         If ``index`` is a scalar, this is an alias for :py:attr:`~get_value`.
 
@@ -339,7 +340,7 @@ class Names:
         self.extend(other)
         return self
 
-    def safe_delete(self, index: Union[int, slice], in_place: bool = False) -> Names:
+    def safe_delete(self, index: int | slice, in_place: bool = False) -> Names:
         """
         Args:
             index:
@@ -360,11 +361,11 @@ class Names:
         del output._names[index]
         return output
 
-    def delete(self, index: Union[int, slice]):
+    def delete(self, index: int | slice):
         """Alias for :py:attr:`~safe_delete` with ``in_place = True``."""
         self.safe_delete(index, in_place=True)
 
-    def __delitem__(self, index: Union[int, slice]):
+    def __delitem__(self, index: int | slice):
         """Alias for :py:attr:`~delete`."""
         self.delete(index)
 
@@ -427,7 +428,7 @@ def _combine_sequences_Names(*x: Names) -> Names:
     return output
 
 
-def _name_to_position(names: Optional[Names], index: str) -> int:
+def _name_to_position(names: Names | None, index: str) -> int:
     i = -1
     if names is not None:
         i = names.map(index)
@@ -436,14 +437,14 @@ def _name_to_position(names: Optional[Names], index: str) -> int:
     return i
 
 
-def _validate_names(names: Optional[Names], length: int) -> bool:
+def _validate_names(names: Names | None, length: int) -> bool:
     if names is not None and len(names) != length:
         raise ValueError("length of 'names' must be equal to number of entries (" + str(length) + ")")
 
     return True
 
 
-def _sanitize_names(names: Optional[Names], length: int) -> Optional[Names]:
+def _sanitize_names(names: Names | None, length: int) -> Names | None:
     if names is None:
         return names
     if not isinstance(names, Names):
@@ -453,7 +454,7 @@ def _sanitize_names(names: Optional[Names], length: int) -> Optional[Names]:
     return names
 
 
-def _combine_names(*x: Any, get_names: Callable) -> Optional[Names]:
+def _combine_names(*x: Any, get_names: Callable) -> Names | None:
     all_names = []
     has_names = False
     for y in x:

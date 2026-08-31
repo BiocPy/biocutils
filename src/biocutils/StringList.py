@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Iterable, Optional, Sequence, Union
+from collections.abc import Iterable, Sequence
+from typing import Any
 
 from .NamedList import NamedList
 from .Names import Names
@@ -22,7 +23,7 @@ class _SubscriptCoercer:
         """
         self._data = data
 
-    def __getitem__(self, index: int) -> Optional[str]:
+    def __getitem__(self, index: int) -> str | None:
         """Get an item and coerce it to string.
 
         Args:
@@ -44,8 +45,8 @@ class StringList(NamedList):
 
     def __init__(
         self,
-        data: Optional[Sequence] = None,
-        names: Optional[Names] = None,
+        data: Sequence | None = None,
+        names: Names | None = None,
         _validate: bool = True,
     ):
         """
@@ -73,7 +74,7 @@ class StringList(NamedList):
                     data = list(_coerce_to_str(item) for item in original)
         super().__init__(data, names, _validate=_validate)
 
-    def set_value(self, index: Union[int, str], value: Any, in_place: bool = False) -> StringList:
+    def set_value(self, index: int | str, value: Any, in_place: bool = False) -> StringList:
         """Calls :py:meth:`~biocutils.NamedList.NamedList.set_value` after coercing ``value`` to a string."""
         return super().set_value(index, _coerce_to_str(value), in_place=in_place)
 
@@ -81,7 +82,7 @@ class StringList(NamedList):
         """Calls :py:meth:`~biocutils.NamedList.NamedList.set_slice` after coercing ``value`` to strings."""
         return super().set_slice(index, _SubscriptCoercer(value), in_place=in_place)
 
-    def safe_insert(self, index: Union[int, str], value: Any, in_place: bool = False) -> StringList:
+    def safe_insert(self, index: int | str, value: Any, in_place: bool = False) -> StringList:
         """Calls :py:meth:`~biocutils.NamedList.NamedList.safe_insert` after coercing ``value`` to a string."""
         return super().safe_insert(index, _coerce_to_str(value), in_place=in_place)
 

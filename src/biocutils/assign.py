@@ -1,4 +1,5 @@
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from .assign_rows import assign_rows
 from .assign_sequence import assign_sequence

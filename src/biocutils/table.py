@@ -1,5 +1,5 @@
+from collections.abc import Sequence
 from functools import singledispatch
-from typing import Sequence
 
 from .IntegerList import IntegerList
 

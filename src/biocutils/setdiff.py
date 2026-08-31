@@ -1,10 +1,8 @@
 from collections.abc import Sequence
+from functools import singledispatch
 
 from .is_missing_scalar import is_missing_scalar
 from .map_to_index import DUPLICATE_METHOD
-
-
-from functools import singledispatch
 
 
 @singledispatch

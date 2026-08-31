@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from functools import singledispatch
-from typing import Any, Sequence, Union
+from typing import Any
 
 
 @singledispatch
@@ -36,7 +37,7 @@ def _subset_sequence_list(x: list, indices: Sequence[int]) -> list:
 
 
 @subset_sequence.register
-def _subset_sequence_range(x: range, indices: Sequence[int]) -> Union[list, range]:
+def _subset_sequence_range(x: range, indices: Sequence[int]) -> list | range:
     """Subset a range by indices.
 
     Args:

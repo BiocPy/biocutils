@@ -1,6 +1,7 @@
+from collections.abc import Sequence
 from copy import deepcopy
 from functools import singledispatch
-from typing import Any, Sequence, Union
+from typing import Any
 
 import numpy
 
@@ -48,7 +49,7 @@ def _assign_sequence_numpy(x: numpy.ndarray, indices: Sequence[int], replacement
 
 
 @assign_sequence.register
-def _assign_sequence_range(x: range, indices: Sequence[int], replacement: Any) -> Union[range, list]:
+def _assign_sequence_range(x: range, indices: Sequence[int], replacement: Any) -> range | list:
     if (
         isinstance(replacement, range)
         and isinstance(indices, range)
