@@ -20,7 +20,6 @@ from .normalize_subscript import (
     normalize_subscript,
 )
 from .print_truncated import print_truncated_list
-from .print_wrapped_table import print_wrapped_table
 from .setdiff import _setdiff_internal, setdiff
 from .StringList import StringList
 from .subset_sequence import subset_sequence
