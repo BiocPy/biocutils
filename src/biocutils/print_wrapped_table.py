@@ -1,23 +1,23 @@
-from typing import Any, List, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 import numpy
 
 from .subset_sequence import subset_sequence
 
 
-def _get_max_width(col: List[str]):
+def _get_max_width(col: list[str]):
     width = 0
     for y in col:
-        if len(y) > width:
-            width = len(y)
+        width = max(width, len(y))
     return width
 
 
 def print_wrapped_table(
-    columns: List[Sequence[str]],
-    floating_names: Optional[Sequence[str]] = None,
+    columns: list[Sequence[str]],
+    floating_names: Sequence[str] | None = None,
     sep: str = " ",
-    window: Optional[int] = None,
+    window: int | None = None,
 ) -> str:
     """Pretty-print a table with aligned and wrapped columns. All column contents are padded so that they are right-
     justified. Wrapping is performed whenever a new column would exceed the window width, in which case the entire
@@ -102,7 +102,7 @@ def print_wrapped_table(
     return output
 
 
-def create_floating_names(names: Optional[List[str]], indices: Sequence[int]) -> List[str]:
+def create_floating_names(names: list[str] | None, indices: Sequence[int]) -> list[str]:
     """Create the floating names to use in :py:meth:`~print_wrapped_table`. If no names are present, positional indices
     are used instead.
 
@@ -122,7 +122,7 @@ def create_floating_names(names: Optional[List[str]], indices: Sequence[int]) ->
         return ["[" + str(i) + "]" for i in indices]
 
 
-def truncate_strings(values: List[str], width: int = 40) -> List[str]:
+def truncate_strings(values: list[str], width: int = 40) -> list[str]:
     """Truncate long strings for printing in :py:meth:`~print_wrapped_table`.
 
     Args:

@@ -21,6 +21,4 @@ def is_package_installed(package_name: str, verbose: bool = False) -> bool:
         if verbose:
             print(f"Package '{package_name}' is not installed.")
 
-        pass
-
     return _installed

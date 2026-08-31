@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import Any, Dict, Optional, Union
+from typing import Any
 from warnings import warn
 
 from .NamedList import NamedList
@@ -40,7 +40,7 @@ class BiocObject:
     Provides a standardized `metadata` slot and copy-on-write semantics.
     """
 
-    def __init__(self, metadata: Optional[Union[Dict[str, Any], NamedList]] = None, _validate: bool = True) -> None:
+    def __init__(self, metadata: dict[str, Any] | NamedList | None = None, _validate: bool = True) -> None:
         """Initialize the BiocObject.
 
         Args:
@@ -82,7 +82,7 @@ class BiocObject:
         return self._metadata
 
     @metadata.setter
-    def metadata(self, metadata: Optional[Union[Dict[str, Any], NamedList]]) -> None:
+    def metadata(self, metadata: dict[str, Any] | NamedList | None) -> None:
         """Set metadata in-place."""
         warn(
             "Setting property 'metadata' is an in-place operation, use 'set_metadata' instead",
@@ -94,7 +94,7 @@ class BiocObject:
         """Alias for :py:attr:`~metadata` getter."""
         return self.metadata
 
-    def set_metadata(self, metadata: Optional[Union[Dict[str, Any], NamedList]], in_place: bool = False) -> BiocObject:
+    def set_metadata(self, metadata: dict[str, Any] | NamedList | None, in_place: bool = False) -> BiocObject:
         """Set new metadata.
 
         Args:

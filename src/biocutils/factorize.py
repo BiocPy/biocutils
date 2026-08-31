@@ -1,4 +1,4 @@
-from typing import Optional, Sequence, Tuple
+from collections.abc import Sequence
 
 import numpy
 
@@ -8,11 +8,11 @@ from .match import match
 
 def factorize(
     x: Sequence,
-    levels: Optional[Sequence] = None,
+    levels: Sequence | None = None,
     sort_levels: bool = False,
-    dtype: Optional[numpy.dtype] = None,
-    fail_missing: Optional[bool] = None,
-) -> Tuple[list, numpy.ndarray]:
+    dtype: numpy.dtype | None = None,
+    fail_missing: bool | None = None,
+) -> tuple[list, numpy.ndarray]:
     """Convert a sequence of hashable values into a factor.
 
     Args:

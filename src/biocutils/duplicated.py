@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from functools import singledispatch
-from typing import Any, Sequence, Union
+from typing import Any
 
 import numpy
 
@@ -8,7 +9,7 @@ from .subset import subset
 
 
 @singledispatch
-def duplicated(x: Any, incomparables: Union[set, Sequence] = set(), from_last: bool = False) -> numpy.ndarray:
+def duplicated(x: Any, incomparables: set | Sequence = set(), from_last: bool = False) -> numpy.ndarray:
     """
     Find duplicated elements of ``x``.
 
@@ -101,9 +102,7 @@ def duplicated(x: Any, incomparables: Union[set, Sequence] = set(), from_last: b
 
 
 @duplicated.register
-def _duplicated_Factor(
-    x: Factor, incomparables: Union[set, Sequence] = set(), from_last: bool = False
-) -> numpy.ndarray:
+def _duplicated_Factor(x: Factor, incomparables: set | Sequence = set(), from_last: bool = False) -> numpy.ndarray:
     present = []
     for lev in x.get_levels():
         if lev in incomparables:
@@ -140,7 +139,7 @@ def _duplicated_Factor(
     return output
 
 
-def unique(x: Any, incomparables: Union[set, Sequence] = set(), from_last: bool = False) -> Any:
+def unique(x: Any, incomparables: set | Sequence = set(), from_last: bool = False) -> Any:
     """
     Get all unique values of ``x``.
 

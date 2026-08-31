@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from functools import singledispatch
-from typing import Any, Sequence
+from typing import Any
 
 import numpy
 

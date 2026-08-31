@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from functools import singledispatch
-from typing import Any, Sequence, Union
+from typing import Any
 
 import numpy
 
@@ -14,10 +15,10 @@ from .subset import subset
 def split(
     x: Any,
     f: Sequence,
-    skip: Union[set, Sequence] = [None, numpy.ma.masked],
+    skip: set | Sequence = [None, numpy.ma.masked],
     drop: bool = False,
     as_NamedList: bool = False,
-) -> Union[dict, NamedList]:
+) -> dict | NamedList:
     """
     Split a sequence ``x`` into groups defined by a categorical factor ``f``.
 
