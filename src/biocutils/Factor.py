@@ -11,6 +11,7 @@ from .combine_sequences import combine_sequences
 from .factorize import factorize
 from .is_list_of_type import is_list_of_type
 from .is_missing_scalar import is_missing_scalar
+from .map_to_index import DUPLICATE_METHOD
 from .match import match
 from .Names import Names, _combine_names, _name_to_position, _sanitize_names
 from .normalize_subscript import (
@@ -19,6 +20,7 @@ from .normalize_subscript import (
     normalize_subscript,
 )
 from .print_truncated import print_truncated_list
+from .setdiff import _setdiff_internal, setdiff
 from .StringList import StringList
 from .subset_sequence import subset_sequence
 
@@ -876,3 +878,9 @@ def _combine_factors(*x: Factor):
         names=_combine_names(*x, get_names=lambda x: x.get_names()),
         _validate=False,
     )
+
+
+@setdiff.register(Factor)
+def _setdiff_Factor(x: Factor, *other: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> Factor:
+    res = _setdiff_internal(x.as_list(), *other, duplicate_method=duplicate_method)
+    return type(x).from_sequence(res, levels=x.get_levels(), ordered=x.get_ordered())
