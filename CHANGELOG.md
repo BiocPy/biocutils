@@ -7,7 +7,7 @@
 - Implement `duplicated()` generic for simple sequences and Factors.
 - Implement the `order()` verb for basic sequences, Factors.
 - Added verbose parameter to `is_package_installed`.
-- Added `setdiff` function for simple sequences.
+- Added `setdiff` function for simple sequences and factors.
 
 ## Version 0.3.0 - 0.3.4
 

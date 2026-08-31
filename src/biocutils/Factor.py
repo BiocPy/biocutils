@@ -876,3 +876,12 @@ def _combine_factors(*x: Factor):
         names=_combine_names(*x, get_names=lambda x: x.get_names()),
         _validate=False,
     )
+
+from .setdiff import setdiff, _setdiff_internal
+from .map_to_index import DUPLICATE_METHOD
+from typing import Sequence
+
+@setdiff.register(Factor)
+def _setdiff_Factor(x: Factor, *other: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> Factor:
+    res = _setdiff_internal(x.as_list(), *other, duplicate_method=duplicate_method)
+    return type(x).from_sequence(res, levels=x.get_levels(), ordered=x.get_ordered())

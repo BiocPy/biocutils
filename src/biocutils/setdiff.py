@@ -4,9 +4,39 @@ from .is_missing_scalar import is_missing_scalar
 from .map_to_index import DUPLICATE_METHOD
 
 
+from functools import singledispatch
+
+@singledispatch
+def _setdiff_internal(first: Sequence, *other: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> list:
+    present = set()
+    for i in range(len(other)):
+        for f in other[i]:
+            if not is_missing_scalar(f):
+                present.add(f)
+
+    output = []
+
+    def handler(f):
+        if not is_missing_scalar(f) and f not in present:
+            output.append(f)
+            present.add(f)
+
+    if duplicate_method == "first":
+        for f in first:
+            handler(f)
+    else:
+        for f in reversed(first):
+            handler(f)
+        output.reverse()
+
+    return output
+
 def setdiff(*x: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> list:
     """Identify the set difference of values in multiple sequences, preserves
     the order of values in the first sequence.
+    
+    This is a :py:func:`~functools.singledispatch` generic, allowing developers
+    to specify custom methods for their own classes.
 
     Args:
         x:
@@ -27,27 +57,6 @@ def setdiff(*x: Sequence, duplicate_method: DUPLICATE_METHOD = "first") -> list:
     if nargs == 0:
         return []
 
-    first = x[0]
-    present = set()
+    return _setdiff_internal(x[0], *x[1:], duplicate_method=duplicate_method)
 
-    for i in range(1, nargs):
-        for f in x[i]:
-            if not is_missing_scalar(f):
-                present.add(f)
-
-    output = []
-
-    def handler(f):
-        if not is_missing_scalar(f) and f not in present:
-            output.append(f)
-            present.add(f)
-
-    if duplicate_method == "first":
-        for f in first:
-            handler(f)
-    else:
-        for f in reversed(first):
-            handler(f)
-        output.reverse()
-
-    return output
+setdiff.register = _setdiff_internal.register
