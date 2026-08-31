@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>biocutils.package_utils - biocutils 0.4.2 documentation</title>
+        <title>biocutils.setdiff - biocutils 0.4.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -232,36 +232,75 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for biocutils.package_utils</h1><div class="highlight"><pre>
-<span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">"jkanche"</span>
-<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">"jkanche"</span>
-<span class="n">__license__</span> <span class="o">=</span> <span class="s2">"MIT"</span>
+          <h1>Source code for biocutils.setdiff</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.is_missing_scalar</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_missing_scalar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.map_to_index</span><span class="w"> </span><span class="kn">import</span> <span class="n">DUPLICATE_METHOD</span>
 
 
-<div class="viewcode-block" id="is_package_installed">
-<a class="viewcode-back" href="../../api/biocutils.html#biocutils.package_utils.is_package_installed">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">is_package_installed</span><span class="p">(</span><span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Check if a package is installed.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">singledispatch</span>
+
+
+<span class="nd">@singledispatch</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_setdiff_internal</span><span class="p">(</span><span class="n">first</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="o">*</span><span class="n">other</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">DUPLICATE_METHOD</span> <span class="o">=</span> <span class="s2">"first"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="n">present</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">other</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_missing_scalar</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+                <span class="n">present</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_missing_scalar</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">present</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">present</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">"first"</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">first</span><span class="p">:</span>
+            <span class="n">handler</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">first</span><span class="p">):</span>
+            <span class="n">handler</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">output</span>
+
+
+<div class="viewcode-block" id="setdiff">
+<a class="viewcode-back" href="../../api/biocutils.html#biocutils.setdiff.setdiff">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">setdiff</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">DUPLICATE_METHOD</span> <span class="o">=</span> <span class="s2">"first"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Identify the set difference of values in multiple sequences, preserves</span>
+<span class="sd">    the order of values in the first sequence.</span>
+
+<span class="sd">    This is a :py:func:`~functools.singledispatch` generic, allowing developers</span>
+<span class="sd">    to specify custom methods for their own classes.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        package_name:</span>
-<span class="sd">            Package name.</span>
+<span class="sd">        x:</span>
+<span class="sd">            One or more sequences of interest containing hashable values.</span>
+<span class="sd">            Ignores missing values as defined in</span>
+<span class="sd">            :py:meth:`~biocutils.is_missing_scalar.is_missing_scalar`.</span>
+
+<span class="sd">        duplicate_method:</span>
+<span class="sd">            Whether to keep the first or last occurrence of duplicated values</span>
+<span class="sd">            when preserving order in the first sequence.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        True if package is installed, otherwise False.</span>
+<span class="sd">        Difference of values in the first sequence but not in the others.</span>
+<span class="sd">        If no sequences are provided, an empty list is returned.</span>
+<span class="sd">        If one sequence is provided, the unique values in the sequence are returned.</span>
 <span class="sd">    """</span>
-    <span class="n">_installed</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"import </span><span class="si">{</span><span class="n">package_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-        <span class="n">_installed</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Package '</span><span class="si">{</span><span class="n">package_name</span><span class="si">}</span><span class="s2">' is not installed."</span><span class="p">)</span>
+    <span class="n">nargs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nargs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
 
-        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">_setdiff_internal</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">duplicate_method</span><span class="o">=</span><span class="n">duplicate_method</span><span class="p">)</span></div>
 
-    <span class="k">return</span> <span class="n">_installed</span></div>
 
+
+<span class="n">setdiff</span><span class="o">.</span><span class="n">register</span> <span class="o">=</span> <span class="n">_setdiff_internal</span><span class="o">.</span><span class="n">register</span>
 </pre></div>
         </article>
       </div>

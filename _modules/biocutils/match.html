@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>biocutils.match - biocutils 0.4.1 documentation</title>
+        <title>biocutils.match - biocutils 0.4.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -161,7 +161,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">biocutils 0.4.1 documentation</div></a>
+      <a href="../../index.html"><div class="brand">biocutils 0.4.2 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +182,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">biocutils 0.4.1 documentation</span>
+  <span class="sidebar-brand-text">biocutils 0.4.2 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -242,20 +242,20 @@
 <div class="viewcode-block" id="MatchIndex">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.match.MatchIndex">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MatchIndex</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    An index for matching one or more ``x`` against different ``targets``.</span>
 <span class="sd">    This is typically constructed by :py:func:`~create_match_index`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">targets</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span>
+        <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"first"</span><span class="p">,</span> <span class="s2">"last"</span><span class="p">,</span> <span class="s2">"any"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"first"</span><span class="p">,</span>
         <span class="n">incomparables</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(),</span>
         <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">fail_missing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            targets:</span>
 <span class="sd">                Targets to be matched against, see :py:func:`~match` for details.</span>
@@ -271,7 +271,7 @@
 
 <span class="sd">            fail_missing:</span>
 <span class="sd">                Whether to raise an error if a value cannot be found in ``targets``, see :py:func:`~match` for details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="kn">from</span><span class="w"> </span><span class="nn">.Factor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factor</span>
 
@@ -279,13 +279,13 @@
             <span class="c1"># Back-compatible behavior.</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="ne">DeprecationWarning</span><span class="p">(</span><span class="s2">&quot;&#39;map_to_index()&#39; is deprecated, use &#39;create_match_index()&#39; instead&quot;</span><span class="p">))</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="ne">DeprecationWarning</span><span class="p">(</span><span class="s2">"'map_to_index()' is deprecated, use 'create_match_index()' instead"</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_map</span> <span class="o">=</span> <span class="n">targets</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">Factor</span><span class="p">):</span>
             <span class="c1"># Optimized method when both x and targets are factors.</span>
             <span class="n">target_index</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">get_levels</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># add 1 so that code = -1 still behaves correctly.</span>
-            <span class="n">first_tie</span> <span class="o">=</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">&quot;first&quot;</span> <span class="ow">or</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">&quot;any&quot;</span>
+            <span class="n">first_tie</span> <span class="o">=</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">"first"</span> <span class="ow">or</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">"any"</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">get_codes</span><span class="p">()):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">first_tie</span> <span class="ow">or</span> <span class="n">target_index</span><span class="p">[</span><span class="n">code</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">target_index</span><span class="p">[</span><span class="n">code</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
@@ -306,7 +306,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_map</span> <span class="o">=</span> <span class="n">mapping</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">first_tie</span> <span class="o">=</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">&quot;first&quot;</span> <span class="ow">or</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">&quot;any&quot;</span>
+            <span class="n">first_tie</span> <span class="o">=</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">"first"</span> <span class="ow">or</span> <span class="n">duplicate_method</span> <span class="o">==</span> <span class="s2">"any"</span>
             <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">targets</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">incomparables</span><span class="p">:</span>
@@ -325,7 +325,7 @@
 <div class="viewcode-block" id="MatchIndex.match">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.match.MatchIndex.match">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            x:</span>
 <span class="sd">                Values to match against ``targets``.</span>
@@ -333,7 +333,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            NumPy array of length equal to ``x``, containing the integer position of each entry of ``x`` inside ``targets``;</span>
 <span class="sd">            see :py:func:`~match` for more details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="kn">from</span><span class="w"> </span><span class="nn">.Factor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factor</span>
 
@@ -350,7 +350,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">y</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&#39; in &#39;targets&#39;&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"cannot find '"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"' in 'targets'"</span><span class="p">)</span>
                     <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
 
         <span class="k">else</span><span class="p">:</span>
@@ -367,7 +367,7 @@
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get_codes</span><span class="p">()):</span>
                     <span class="n">candidate</span> <span class="o">=</span> <span class="n">x_index</span><span class="p">[</span><span class="n">code</span><span class="p">]</span>
                     <span class="k">if</span> <span class="n">candidate</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;&#39; in &#39;targets&#39;&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"cannot find '"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">"' in 'targets'"</span><span class="p">)</span>
                     <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">candidate</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get_codes</span><span class="p">()):</span>
@@ -383,12 +383,12 @@
 <span class="nd">@singledispatch</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_match_index</span><span class="p">(</span>
     <span class="n">targets</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-    <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span>
+    <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"first"</span><span class="p">,</span> <span class="s2">"last"</span><span class="p">,</span> <span class="s2">"any"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"first"</span><span class="p">,</span>
     <span class="n">incomparables</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(),</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fail_missing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MatchIndex</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create a index for matching an arbitrary sequence against ``targets``.</span>
 <span class="sd">    Calling ``create_match_index(targets, ...).match(x)`` is equivalent to ``match(x, targets, ...)``.</span>
 
@@ -416,33 +416,33 @@
 <span class="sd">        &gt;&gt;&gt; import biocutils</span>
 <span class="sd">        &gt;&gt;&gt; mobj = biocutils.create_match_index(</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;A&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
+<span class="sd">        ...         "A",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "D",</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; mobj.match(</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;A&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
-<span class="sd">        ...         &quot;E&quot;,</span>
+<span class="sd">        ...         "A",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "D",</span>
+<span class="sd">        ...         "E",</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; ft = biocutils.Factor.from_sequence(</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;a&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;c&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
-<span class="sd">        ...         &quot;e&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
+<span class="sd">        ...         "a",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "c",</span>
+<span class="sd">        ...         "D",</span>
+<span class="sd">        ...         "e",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "D",</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; fobj = biocutils.create_match_index(</span>
@@ -450,17 +450,17 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; fx = biocutils.Factor.from_sequence(</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;A&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
-<span class="sd">        ...         &quot;E&quot;,</span>
+<span class="sd">        ...         "A",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "D",</span>
+<span class="sd">        ...         "E",</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; fobj.match(fx)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">return</span> <span class="n">MatchIndex</span><span class="p">(</span>
         <span class="n">targets</span><span class="p">,</span> <span class="n">duplicate_method</span><span class="o">=</span><span class="n">duplicate_method</span><span class="p">,</span> <span class="n">incomparables</span><span class="o">=</span><span class="n">incomparables</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">fail_missing</span><span class="o">=</span><span class="n">fail_missing</span>
@@ -474,12 +474,12 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">targets</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-    <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span>
+    <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"first"</span><span class="p">,</span> <span class="s2">"last"</span><span class="p">,</span> <span class="s2">"any"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"first"</span><span class="p">,</span>
     <span class="n">incomparables</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(),</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fail_missing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Find a matching value of each element of ``x`` in ``targets``.</span>
 <span class="sd">    Calling ``match(x, targets, ...)`` should be equivalent to ``create_match_index(targets, ...).match(x)``.</span>
 
@@ -518,50 +518,50 @@
 <span class="sd">        &gt;&gt;&gt; import biocutils</span>
 <span class="sd">        &gt;&gt;&gt; biocutils.match(</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;A&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
-<span class="sd">        ...         &quot;E&quot;,</span>
+<span class="sd">        ...         "A",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "D",</span>
+<span class="sd">        ...         "D",</span>
+<span class="sd">        ...         "E",</span>
 <span class="sd">        ...     ],</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;A&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
+<span class="sd">        ...         "A",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "D",</span>
 <span class="sd">        ...     ],</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; fx = biocutils.Factor.from_sequence(</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;A&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;C&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
-<span class="sd">        ...         &quot;E&quot;,</span>
+<span class="sd">        ...         "A",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "C",</span>
+<span class="sd">        ...         "D",</span>
+<span class="sd">        ...         "E",</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; ft = biocutils.Factor.from_sequence(</span>
 <span class="sd">        ...     [</span>
-<span class="sd">        ...         &quot;a&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;c&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
-<span class="sd">        ...         &quot;e&quot;,</span>
-<span class="sd">        ...         &quot;B&quot;,</span>
-<span class="sd">        ...         &quot;D&quot;,</span>
+<span class="sd">        ...         "a",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "c",</span>
+<span class="sd">        ...         "D",</span>
+<span class="sd">        ...         "e",</span>
+<span class="sd">        ...         "B",</span>
+<span class="sd">        ...         "D",</span>
 <span class="sd">        ...     ]</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; biocutils.match(</span>
 <span class="sd">        ...     fx,</span>
 <span class="sd">        ...     ft,</span>
-<span class="sd">        ...     duplicate_method=&quot;last&quot;,</span>
+<span class="sd">        ...     duplicate_method="last",</span>
 <span class="sd">        ... )</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">obj</span> <span class="o">=</span> <span class="n">create_match_index</span><span class="p">(</span>
         <span class="n">targets</span><span class="p">,</span> <span class="n">duplicate_method</span><span class="o">=</span><span class="n">duplicate_method</span><span class="p">,</span> <span class="n">incomparables</span><span class="o">=</span><span class="n">incomparables</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">fail_missing</span><span class="o">=</span><span class="n">fail_missing</span>
@@ -600,7 +600,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=c87aa342"></script>
+</div><script src="../../_static/documentation_options.js?v=ff822928"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

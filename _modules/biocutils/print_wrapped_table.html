@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>biocutils.print_wrapped_table - biocutils 0.4.1 documentation</title>
+        <title>biocutils.print_wrapped_table - biocutils 0.4.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -161,7 +161,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">biocutils 0.4.1 documentation</div></a>
+      <a href="../../index.html"><div class="brand">biocutils 0.4.2 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +182,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">biocutils 0.4.1 documentation</span>
+  <span class="sidebar-brand-text">biocutils 0.4.2 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -253,10 +253,10 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">print_wrapped_table</span><span class="p">(</span>
     <span class="n">columns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
     <span class="n">floating_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">" "</span><span class="p">,</span>
     <span class="n">window</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pretty-print a table with aligned and wrapped columns. All column contents are padded so that they are right-</span>
+<span class="w">    </span><span class="sd">"""Pretty-print a table with aligned and wrapped columns. All column contents are padded so that they are right-</span>
 <span class="sd">    justified. Wrapping is performed whenever a new column would exceed the window width, in which case the entire</span>
 <span class="sd">    column (and all subsequent columns) are printed below the previous columns.</span>
 
@@ -285,7 +285,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        String containing the pretty-printed table.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
@@ -295,7 +295,7 @@
             <span class="n">window</span> <span class="o">=</span> <span class="mi">150</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;at least one column should be supplied in &#39;columns&#39;&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"at least one column should be supplied in 'columns'"</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="n">floatwidth</span> <span class="o">=</span> <span class="mi">0</span>
@@ -306,11 +306,11 @@
             <span class="n">new_floating_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">floatwidth</span><span class="p">))</span>
         <span class="n">floating_names</span> <span class="o">=</span> <span class="n">new_floating_names</span>
 
-    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">reinitialize</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">floating_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">floating_names</span><span class="p">[:]</span>
 
@@ -323,7 +323,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">init</span> <span class="ow">and</span> <span class="n">used</span> <span class="o">+</span> <span class="n">width</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">window</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">contents</span><span class="p">:</span>
-                <span class="n">output</span> <span class="o">+=</span> <span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">output</span> <span class="o">+=</span> <span class="n">line</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
             <span class="n">contents</span> <span class="o">=</span> <span class="n">reinitialize</span><span class="p">()</span>
             <span class="n">init</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">used</span> <span class="o">=</span> <span class="n">floatwidth</span>
@@ -335,7 +335,7 @@
         <span class="n">used</span> <span class="o">+=</span> <span class="n">width</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
         <span class="n">init</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output</span></div>
 
 
@@ -343,7 +343,7 @@
 <div class="viewcode-block" id="create_floating_names">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.print_wrapped_table.create_floating_names">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_floating_names</span><span class="p">(</span><span class="n">names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">indices</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the floating names to use in :py:meth:`~print_wrapped_table`. If no names are present, positional indices</span>
+<span class="w">    </span><span class="sd">"""Create the floating names to use in :py:meth:`~print_wrapped_table`. If no names are present, positional indices</span>
 <span class="sd">    are used instead.</span>
 
 <span class="sd">    Args:</span>
@@ -355,18 +355,18 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        List of strings containing floating names.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">subset_sequence</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">indices</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">"["</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"]"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="truncate_strings">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.print_wrapped_table.truncate_strings">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">truncate_strings</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Truncate long strings for printing in :py:meth:`~print_wrapped_table`.</span>
+<span class="w">    </span><span class="sd">"""Truncate long strings for printing in :py:meth:`~print_wrapped_table`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        values:</span>
@@ -377,11 +377,11 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        List containing truncated strings.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">replacement</span> <span class="o">=</span> <span class="n">values</span><span class="p">[:]</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
-            <span class="n">replacement</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span>
+            <span class="n">replacement</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"..."</span>
     <span class="k">return</span> <span class="n">replacement</span></div>
 
 
@@ -389,7 +389,7 @@
 <div class="viewcode-block" id="print_type">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.print_wrapped_table.print_type">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">print_type</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the type of an object.</span>
+<span class="w">    </span><span class="sd">"""Print the type of an object.</span>
 
 <span class="sd">    Print the type of an object, with some special behavior for certain classes</span>
 <span class="sd">    (e.g., to add the data type of NumPy arrays). This is intended for display</span>
@@ -400,10 +400,10 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        String containing the class of the object.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span> <span class="o">+</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span> <span class="o">+</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">"]"</span>
     <span class="k">return</span> <span class="bp">cls</span></div>
 
 </pre></div>
@@ -438,7 +438,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=c87aa342"></script>
+</div><script src="../../_static/documentation_options.js?v=ff822928"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>biocutils.Factor - biocutils 0.4.1 documentation</title>
+        <title>biocutils.Factor - biocutils 0.4.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -161,7 +161,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">biocutils 0.4.1 documentation</div></a>
+      <a href="../../index.html"><div class="brand">biocutils 0.4.2 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +182,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">biocutils 0.4.1 documentation</span>
+  <span class="sidebar-brand-text">biocutils 0.4.2 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -246,6 +246,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.factorize</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorize</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.is_list_of_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_list_of_type</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.is_missing_scalar</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_missing_scalar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.map_to_index</span><span class="w"> </span><span class="kn">import</span> <span class="n">DUPLICATE_METHOD</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.match</span><span class="w"> </span><span class="kn">import</span> <span class="n">match</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.Names</span><span class="w"> </span><span class="kn">import</span> <span class="n">Names</span><span class="p">,</span> <span class="n">_combine_names</span><span class="p">,</span> <span class="n">_name_to_position</span><span class="p">,</span> <span class="n">_sanitize_names</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.normalize_subscript</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -254,6 +255,7 @@
     <span class="n">normalize_subscript</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.print_truncated</span><span class="w"> </span><span class="kn">import</span> <span class="n">print_truncated_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.setdiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">_setdiff_internal</span><span class="p">,</span> <span class="n">setdiff</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.StringList</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringList</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.subset_sequence</span><span class="w"> </span><span class="kn">import</span> <span class="n">subset_sequence</span>
 
@@ -269,13 +271,13 @@
         <span class="n">codes</span> <span class="o">=</span> <span class="n">replacement</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;codes&#39; should be a 1-dimensional array&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'codes' should be a 1-dimensional array"</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">signedinteger</span><span class="p">):</span>  <span class="c1"># force it to be signed.</span>
             <span class="n">codes</span> <span class="o">=</span> <span class="n">codes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">min_scalar_type</span><span class="p">(</span><span class="o">-</span><span class="n">num_levels</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">num_levels</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all entries of &#39;codes&#39; should refer to an entry of &#39;levels&#39;&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"all entries of 'codes' should refer to an entry of 'levels'"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">codes</span>
 
@@ -288,9 +290,9 @@
 
     <span class="k">if</span> <span class="n">check</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">levels</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;all entries of &#39;levels&#39; should be non-missing&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"all entries of 'levels' should be non-missing"</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">levels</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all entries of &#39;levels&#39; should be unique&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"all entries of 'levels' should be unique"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">levels</span>
 
@@ -298,34 +300,34 @@
 <div class="viewcode-block" id="FactorIterator">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.FactorIterator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FactorIterator</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterator for a :py:class:`~Factor` object.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Iterator for a :py:class:`~Factor` object."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Factor</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            parent: The parent :py:class:`~Factor` object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_position</span> <span class="o">=</span> <span class="mi">0</span>
 
 <div class="viewcode-block" id="FactorIterator.__iter__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.FactorIterator.__iter__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FactorIterator</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            The iterator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
 
 <div class="viewcode-block" id="FactorIterator.__next__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.FactorIterator.__next__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Level corresponding to the code at the current position, or None</span>
 <span class="sd">            for missing codes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">StopIteration</span>
         <span class="k">else</span><span class="p">:</span>
@@ -339,12 +341,12 @@
 <div class="viewcode-block" id="Factor">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Factor</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Factor class, equivalent to R&#39;s ``factor``.</span>
+<span class="w">    </span><span class="sd">"""Factor class, equivalent to R's ``factor``.</span>
 
 <span class="sd">    This is a vector of integer codes, each of which is an index into a list of</span>
 <span class="sd">    unique strings. The aim is to encode a list of strings as integers for</span>
 <span class="sd">    easier numerical analysis.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -354,7 +356,7 @@
         <span class="n">names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Names</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">_validate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a Factor object.</span>
+<span class="w">        </span><span class="sd">"""Initialize a Factor object.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            codes:</span>
@@ -376,7 +378,7 @@
 
 <span class="sd">            _validate:</span>
 <span class="sd">                Internal use only.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">_validate</span><span class="p">:</span>
             <span class="n">levels</span> <span class="o">=</span> <span class="n">_sanitize_levels</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span>
             <span class="n">codes</span> <span class="o">=</span> <span class="n">_sanitize_codes</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">))</span>
@@ -400,26 +402,26 @@
 <div class="viewcode-block" id="Factor.get_codes">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.get_codes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_codes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Array of integer codes, used as indices into the levels from</span>
 <span class="sd">            :py:meth:`~get_levels`. Missing values are marked with -1.</span>
 
 <span class="sd">            This should be treated as a read-only reference. To modify</span>
 <span class="sd">            the codes, use :py:meth:`~set_codes` instead.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_codes</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">codes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:meth:`~get_codes`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Alias for :py:meth:`~get_codes`."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_codes</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Factor.set_codes">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.set_codes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_codes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            codes:</span>
 <span class="sd">                Integer codes referencing the factor levels. This should</span>
@@ -431,10 +433,10 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A modified ``Factor`` object with the new codes, either as a</span>
 <span class="sd">            new object or as a reference to the current object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_define_output</span><span class="p">(</span><span class="n">in_place</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;length of &#39;codes&#39; should be equal to that of the current object&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"length of 'codes' should be equal to that of the current object"</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">_codes</span> <span class="o">=</span> <span class="n">_sanitize_codes</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">output</span></div>
 
@@ -442,40 +444,40 @@
 <div class="viewcode-block" id="Factor.get_levels">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.get_levels">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StringList</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            List of strings containing the factor levels.</span>
 
 <span class="sd">            This should be treated as a read-only reference. To modify the</span>
 <span class="sd">            levels, use :py:meth:`~replace_levels` instead.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_levels</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">levels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StringList</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:meth:`~get_levels`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Alias for :py:meth:`~get_levels`."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_levels</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Factor.get_ordered">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.get_ordered">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_ordered</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            True if the levels are ordered, otherwise False.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ordered</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">ordered</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:meth:`~get_ordered`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Alias for :py:meth:`~get_ordered`."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ordered</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Factor.set_ordered">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.set_ordered">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_ordered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ordered</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            ordered:</span>
 <span class="sd">                Whether to treat the levels as being ordered.</span>
@@ -486,7 +488,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A modified ``Factor`` object with the new ordered status, either as</span>
 <span class="sd">            a new object or as a reference to the current object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_define_output</span><span class="p">(</span><span class="n">in_place</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">_ordered</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ordered</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">output</span></div>
@@ -495,25 +497,25 @@
 <div class="viewcode-block" id="Factor.get_names">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.get_names">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Names</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Names for the factor elements.</span>
 
 <span class="sd">            This should be treated as a read-only reference. To modify the</span>
 <span class="sd">            names, use :py:meth:`~set_names` instead.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Names</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:meth:`~get_names`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Alias for :py:meth:`~get_names`."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_names</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Factor.set_names">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.set_names">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Names</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NamedList&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Names</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"NamedList"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            names:</span>
 <span class="sd">                List of names, of the same length as this list.</span>
@@ -524,7 +526,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A modified ``Factor`` with the new names, either as a new object or</span>
 <span class="sd">            as a reference to the current object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_define_output</span><span class="p">(</span><span class="n">in_place</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">_names</span> <span class="o">=</span> <span class="n">_sanitize_names</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">output</span></div>
@@ -537,73 +539,73 @@
 <div class="viewcode-block" id="Factor.__len__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__len__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Length of the factor in terms of the number of codes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Factor.__iter__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__iter__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FactorIterator</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            An iterator over the factor. This will iterate over the codes and</span>
 <span class="sd">            report the corresponding level (or None).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">FactorIterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Factor.__repr__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A stringified representation of this object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="s2">&quot;Factor(codes=&quot;</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, levels=&quot;</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="s2">"Factor(codes="</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">)</span> <span class="o">+</span> <span class="s2">", levels="</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ordered</span><span class="p">:</span>
-            <span class="n">tmp</span> <span class="o">+=</span> <span class="s2">&quot;, ordered=True&quot;</span>
+            <span class="n">tmp</span> <span class="o">+=</span> <span class="s2">", ordered=True"</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">:</span>
-            <span class="n">tmp</span> <span class="o">+=</span> <span class="s2">&quot;, names=&quot;</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">)</span>
-        <span class="n">tmp</span> <span class="o">+=</span> <span class="s2">&quot;)&quot;</span>
+            <span class="n">tmp</span> <span class="o">+=</span> <span class="s2">", names="</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">)</span>
+        <span class="n">tmp</span> <span class="o">+=</span> <span class="s2">")"</span>
         <span class="k">return</span> <span class="n">tmp</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A pretty-printed representation of this object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Factor of length &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; with &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; level&quot;</span>
+<span class="sd">        """</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">"Factor of length "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">))</span> <span class="o">+</span> <span class="s2">" with "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">))</span> <span class="o">+</span> <span class="s2">" level"</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;s&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="s2">"s"</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
         <span class="n">message</span> <span class="o">+=</span> <span class="p">(</span>
-            <span class="s2">&quot;values: &quot;</span>
+            <span class="s2">"values: "</span>
             <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">include_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">+=</span> <span class="p">(</span>
-                <span class="s2">&quot;names: &quot;</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">include_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">"names: "</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">include_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
             <span class="p">)</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;levels: &quot;</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">include_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;ordered: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ordered</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s2">"levels: "</span> <span class="o">+</span> <span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">include_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s2">"ordered: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ordered</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">message</span>
 
 <div class="viewcode-block" id="Factor.__eq__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__eq__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Factor</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            other: Another ``Factor``.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Whether the current object is equal to ``other``, i.e.,</span>
 <span class="sd">            same codes, levels, names and ordered status.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Factor</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="p">(</span>
@@ -623,7 +625,7 @@
 <div class="viewcode-block" id="Factor.get_value">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.get_value">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            index:</span>
 <span class="sd">                Integer index of the element to obtain. Alternatively, a string</span>
@@ -633,7 +635,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            The factor level for the code at the specified position, or None if</span>
 <span class="sd">            the entry is missing.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">index</span> <span class="o">=</span> <span class="n">_name_to_position</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
         <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
@@ -645,7 +647,7 @@
 <div class="viewcode-block" id="Factor.get_slice">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.get_slice">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">SubscriptTypes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            index:</span>
 <span class="sd">                Subset of elements to obtain, see</span>
@@ -656,7 +658,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A ``Factor`` is returned containing the specified subset.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">index</span><span class="p">,</span> <span class="n">scalar</span> <span class="o">=</span> <span class="n">normalize_subscript</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">_codes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
@@ -668,11 +670,11 @@
 <div class="viewcode-block" id="Factor.__getitem__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__getitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">SubscriptTypes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Factor</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        If ``index`` is a scalar, this is an alias for :py:meth:`~get_value`.</span>
 
 <span class="sd">        If ``index`` is a sequence, this is an alias for :py:meth:`~get_slice`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">index</span><span class="p">,</span> <span class="n">scalar</span> <span class="o">=</span> <span class="n">normalize_subscript</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scalar</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -683,7 +685,7 @@
 <div class="viewcode-block" id="Factor.set_value">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.set_value">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            index:</span>
 <span class="sd">                Integer index of the element to replace. Alternatively, a string</span>
@@ -700,7 +702,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A ``Factor`` object with the modified entry at ``index``. This is either</span>
 <span class="sd">            a new object or a reference to the current object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">in_place</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">else</span><span class="p">:</span>
@@ -719,13 +721,13 @@
                 <span class="n">output</span><span class="o">.</span><span class="n">_codes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
                 <span class="k">return</span> <span class="n">output</span>
 
-        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;failed to find level &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">"failed to find level '"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"'"</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Factor.set_slice">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.set_slice">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">SubscriptTypes</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Factor</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Replace items in the ``Factor`` list.  The ``index`` elements in the</span>
 <span class="sd">        current object are replaced with the corresponding values in ``value``.</span>
 <span class="sd">        This is performed by finding the level for each entry of the</span>
@@ -751,7 +753,7 @@
 <span class="sd">            A ``Factor`` object with values at ``index`` replaced by ``value``.</span>
 <span class="sd">            This is either a new object or a reference to the current object,</span>
 <span class="sd">            depending on ``in_place``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">in_place</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">else</span><span class="p">:</span>
@@ -779,11 +781,11 @@
 <div class="viewcode-block" id="Factor.__setitem__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__setitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">SubscriptTypes</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Factor</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        If ``index`` is a scalar, this is an alias for :py:meth:`~set_value`.</span>
 
 <span class="sd">        If ``index`` is a sequence, this is an alias for :py:meth:`~set_slice`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">index</span><span class="p">,</span> <span class="n">scalar</span> <span class="o">=</span> <span class="n">normalize_subscript</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scalar</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -798,7 +800,7 @@
 <div class="viewcode-block" id="Factor.drop_unused_levels">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.drop_unused_levels">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">drop_unused_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Drop unused levels.</span>
+<span class="w">        </span><span class="sd">"""Drop unused levels.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            in_place: Whether to perform this modification in-place.</span>
@@ -809,7 +811,7 @@
 
 <span class="sd">            If ``in_place = True``, unused levels are removed from the</span>
 <span class="sd">            current object; a reference to the current object is returned.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">in_place</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">else</span><span class="p">:</span>
@@ -844,7 +846,7 @@
         <span class="n">levels</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Replace the existing levels with a new list. The codes of the</span>
+<span class="w">        </span><span class="sd">"""Replace the existing levels with a new list. The codes of the</span>
 <span class="sd">        returned ``Factor`` are unchanged by this method and will index into</span>
 <span class="sd">        the replacement ``levels``, so each element of the ``Factor`` may refer</span>
 <span class="sd">        to a different string after the levels are replaced. (To change the</span>
@@ -867,19 +869,19 @@
 
 <span class="sd">            If ``in_place = True``, the levels are replaced in the current</span>
 <span class="sd">            object, and a reference to the current object is returned.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">new_levels</span> <span class="o">=</span> <span class="n">levels</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_levels</span><span class="p">,</span> <span class="n">StringList</span><span class="p">):</span>
             <span class="n">new_levels</span> <span class="o">=</span> <span class="n">StringList</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_levels</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;levels&#39; should be at least as long as the existing levels&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'levels' should be at least as long as the existing levels"</span><span class="p">)</span>
 
         <span class="n">present</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">new_levels</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all entries of &#39;levels&#39; should be non-missing&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"all entries of 'levels' should be non-missing"</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">present</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all entries of &#39;levels&#39; should be unique&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"all entries of 'levels' should be unique"</span><span class="p">)</span>
             <span class="n">present</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">in_place</span><span class="p">:</span>
@@ -894,13 +896,13 @@
 <div class="viewcode-block" id="Factor.set_levels">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.set_levels">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">remap</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Alias for :py:meth:`~remap_levels` if ``remap = True``, otherwise an</span>
 <span class="sd">        alias for :py:meth:`~replace_levels`. The first alias is deprecated and</span>
 <span class="sd">        :py:meth:`~remap_levels` should be used directly if that is the intent.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">remap</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;&#39;remap=True&#39; is deprecated, use &#39;remap_levels()&#39; instead&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">"'remap=True' is deprecated, use 'remap_levels()' instead"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">remap_levels</span><span class="p">(</span><span class="n">levels</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="n">in_place</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_levels</span><span class="p">(</span><span class="n">levels</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="n">in_place</span><span class="p">)</span></div>
@@ -909,7 +911,7 @@
 <div class="viewcode-block" id="Factor.remap_levels">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.remap_levels">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remap_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">levels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remap codes to a replacement list of levels. Each entry of the</span>
+<span class="w">        </span><span class="sd">"""Remap codes to a replacement list of levels. Each entry of the</span>
 <span class="sd">        remapped ``Factor`` will refer to the same string across the old and</span>
 <span class="sd">        new levels, provided that string is present in both sets of levels.</span>
 <span class="sd">        (To change the levels without altering the codes of the ``Factor``, use</span>
@@ -937,7 +939,7 @@
 
 <span class="sd">            If ``in_place = True``, the levels are replaced in the current</span>
 <span class="sd">            object, and a reference to the current object is returned.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">in_place</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">else</span><span class="p">:</span>
@@ -954,16 +956,16 @@
                     <span class="n">lmapping</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_levels</span><span class="p">)</span>
                     <span class="n">new_levels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">levels</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lmapping</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;string &#39;levels&#39; should already be present among object levels&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"string 'levels' should already be present among object levels"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_levels</span> <span class="o">=</span> <span class="n">levels</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_levels</span><span class="p">,</span> <span class="n">StringList</span><span class="p">):</span>
                 <span class="n">new_levels</span> <span class="o">=</span> <span class="n">StringList</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">new_levels</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all entries of &#39;levels&#39; should be non-missing&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"all entries of 'levels' should be non-missing"</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lmapping</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all entries of &#39;levels&#39; should be unique&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"all entries of 'levels' should be unique"</span><span class="p">)</span>
                 <span class="n">lmapping</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
 
         <span class="n">mapping</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">)</span>
@@ -989,10 +991,10 @@
 <div class="viewcode-block" id="Factor.__copy__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__copy__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A shallow copy of the ``Factor`` object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">,</span>
             <span class="n">levels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">,</span>
@@ -1005,10 +1007,10 @@
 <div class="viewcode-block" id="Factor.__deepcopy__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__deepcopy__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            A deep copy of the ``Factor`` object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
             <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">,</span> <span class="n">memo</span><span class="p">),</span>
             <span class="n">levels</span><span class="o">=</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">,</span> <span class="n">memo</span><span class="p">),</span>
@@ -1025,11 +1027,11 @@
 <div class="viewcode-block" id="Factor.to_pandas">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.to_pandas">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_pandas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Coerce to :py:class:`~pandas.Categorical` object.</span>
+<span class="w">        </span><span class="sd">"""Coerce to :py:class:`~pandas.Categorical` object.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Categorical: A :py:class:`~pandas.Categorical` object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">Categorical</span>
 
         <span class="k">return</span> <span class="n">Categorical</span><span class="p">(</span>
@@ -1049,7 +1051,7 @@
         <span class="n">names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a sequence of hashable values into a factor.</span>
+<span class="w">        </span><span class="sd">"""Convert a sequence of hashable values into a factor.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            x:</span>
@@ -1080,7 +1082,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A ``Factor`` object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">levels</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">factorize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">sort_levels</span><span class="o">=</span><span class="n">sort_levels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Factor</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="n">ordered</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span></div>
 
@@ -1092,18 +1094,18 @@
 <div class="viewcode-block" id="Factor.as_list">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.as_list">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">as_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            List of strings corresponding to the factor elements.</span>
 <span class="sd">            Missing values are represented as None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_levels</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_codes</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Factor.safe_delete">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.safe_delete">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">safe_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">slice</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            index:</span>
 <span class="sd">                Integer index or slice containing position(s) to delete.</span>
@@ -1117,7 +1119,7 @@
 <span class="sd">            A ``Factor`` where the item at ``index`` is removed. This is a</span>
 <span class="sd">            new object if ``in_place = False``, otherwise it is a reference to</span>
 <span class="sd">            the current object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">in_place</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1140,14 +1142,14 @@
 <div class="viewcode-block" id="Factor.delete">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.delete">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:meth:`~safe_delete` with ``in_place = True``.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Alias for :py:meth:`~safe_delete` with ``in_place = True``."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safe_delete</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Factor.__delitem__">
 <a class="viewcode-back" href="../../api/biocutils.html#biocutils.Factor.Factor.__delitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:meth:`~delete`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Alias for :py:meth:`~delete`."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
 </div>
 
@@ -1166,7 +1168,7 @@
 <span class="nd">@combine_sequences</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Factor</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_combine_factors</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">Factor</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_list_of_type</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Factor</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all elements to `combine` must be `Factor` objects&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"all elements to `combine` must be `Factor` objects"</span><span class="p">)</span>
 
     <span class="n">first</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">first_levels</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">_levels</span>
@@ -1210,6 +1212,12 @@
         <span class="n">names</span><span class="o">=</span><span class="n">_combine_names</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">get_names</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">get_names</span><span class="p">()),</span>
         <span class="n">_validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
+
+
+<span class="nd">@setdiff</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Factor</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_setdiff_Factor</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Factor</span><span class="p">,</span> <span class="o">*</span><span class="n">other</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">duplicate_method</span><span class="p">:</span> <span class="n">DUPLICATE_METHOD</span> <span class="o">=</span> <span class="s2">"first"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Factor</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">_setdiff_internal</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">as_list</span><span class="p">(),</span> <span class="o">*</span><span class="n">other</span><span class="p">,</span> <span class="n">duplicate_method</span><span class="o">=</span><span class="n">duplicate_method</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">get_levels</span><span class="p">(),</span> <span class="n">ordered</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">get_ordered</span><span class="p">())</span>
 </pre></div>
         </article>
       </div>
@@ -1242,7 +1250,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=c87aa342"></script>
+</div><script src="../../_static/documentation_options.js?v=ff822928"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

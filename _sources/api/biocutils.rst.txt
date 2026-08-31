@@ -284,6 +284,14 @@ biocutils.reverse\_index module
    :show-inheritance:
    :undoc-members:
 
+biocutils.setdiff module
+------------------------
+
+.. automodule:: biocutils.setdiff
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 biocutils.show\_as\_cell module
 -------------------------------
 
