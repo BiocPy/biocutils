@@ -22,7 +22,7 @@ def test_setdiff_duplicates():
 
     out = setdiff(["B", "B", "C", "A", "D", "D", "E"], ["A", "A", "F", "F"], duplicate_method="last")
     assert out == ["B", "C", "D", "E"]
-    
+
     # Switches the order of B being reported.
     out = setdiff(
         ["C", "A", "D", "B", "E", "B"], ["A", "C", "E", "F"], duplicate_method="last"
