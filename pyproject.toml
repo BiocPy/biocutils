@@ -31,7 +31,7 @@ classifiers = [
 ]
 dependencies = [
     "importlib-metadata>=9.0.0 ; python_full_version < '3.8'",
-    "numpy>=2.5.2",
+    "numpy",
 ]
 
 
