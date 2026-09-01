@@ -3,6 +3,8 @@ __copyright__ = "jkanche"
 __license__ = "MIT"
 
 
+import importlib.util
+
 def is_package_installed(package_name: str, verbose: bool = False) -> bool:
     """Check if a package is installed.
 
@@ -13,12 +15,12 @@ def is_package_installed(package_name: str, verbose: bool = False) -> bool:
     Returns:
         True if package is installed, otherwise False.
     """
-    _installed = False
     try:
-        exec(f"import {package_name}")
-        _installed = True
+        _installed = importlib.util.find_spec(package_name) is not None
     except Exception:
-        if verbose:
-            print(f"Package '{package_name}' is not installed.")
+        _installed = False
+        
+    if not _installed and verbose:
+        print(f"Package '{package_name}' is not installed.")
 
     return _installed
