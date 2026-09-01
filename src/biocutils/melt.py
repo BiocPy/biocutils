@@ -1,6 +1,8 @@
 from functools import singledispatch
 from typing import Any
+
 import pandas as pd
+
 
 @singledispatch
 def melt(x: Any, **kwargs) -> pd.DataFrame:
@@ -17,9 +19,9 @@ def melt(x: Any, **kwargs) -> pd.DataFrame:
     """
     if hasattr(x, "melt"):
         return x.melt(**kwargs)
-        
+
     if hasattr(x, "to_pandas"):
         df = x.to_pandas()
         return df.melt(**kwargs)
-        
+
     raise TypeError(f"No melt implementation found for class '{type(x).__name__}'")

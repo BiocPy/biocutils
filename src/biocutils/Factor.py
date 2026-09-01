@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import warnings
+from collections.abc import Sequence
 from copy import copy, deepcopy
-from typing import Optional, Sequence, Union
 
 import numpy
 
@@ -80,7 +80,7 @@ class FactorIterator:
         """
         return self
 
-    def __next__(self) -> Union[str, None]:
+    def __next__(self) -> str | None:
         """
         Returns:
             Level corresponding to the code at the current position, or None
@@ -104,10 +104,10 @@ class Factor:
 
     def __init__(
         self,
-        codes: Union[numpy.ndarray, Sequence[int]],
-        levels: Union[StringList, Sequence[str]],
+        codes: numpy.ndarray | Sequence[int],
+        levels: StringList | Sequence[str],
         ordered: bool = False,
-        names: Optional[Union[Names, Sequence[str]]] = None,
+        names: Names | Sequence[str] | None = None,
         _validate: bool = True,
     ):
         """Initialize a Factor object.
@@ -248,7 +248,7 @@ class Factor:
         """Alias for :py:meth:`~get_names`."""
         return self.get_names()
 
-    def set_names(self, names: Optional[Names], in_place: bool = False) -> "NamedList":
+    def set_names(self, names: Names | None, in_place: bool = False) -> NamedList:
         """
         Args:
             names:
@@ -343,7 +343,7 @@ class Factor:
     #####>>>> Slicing <<<<#####
     ###########################
 
-    def get_value(self, index: Union[str, int]) -> Union[str, None]:
+    def get_value(self, index: str | int) -> str | None:
         """
         Args:
             index:
@@ -382,7 +382,7 @@ class Factor:
             output._names = subset_sequence(self._names, index)
         return output
 
-    def __getitem__(self, index: SubscriptTypes) -> Union[str, Factor]:
+    def __getitem__(self, index: SubscriptTypes) -> str | Factor:
         """
         If ``index`` is a scalar, this is an alias for :py:meth:`~get_value`.
 
@@ -394,7 +394,7 @@ class Factor:
         else:
             return self.get_slice(NormalizedSubscript(index))
 
-    def set_value(self, index: Union[str, int], value: Union[str, None], in_place: bool = False) -> Factor:
+    def set_value(self, index: str | int, value: str | None, in_place: bool = False) -> Factor:
         """
         Args:
             index:
@@ -484,7 +484,7 @@ class Factor:
 
         return output
 
-    def __setitem__(self, index: SubscriptTypes, value: Union[str, Factor]):
+    def __setitem__(self, index: SubscriptTypes, value: str | Factor):
         """
         If ``index`` is a scalar, this is an alias for :py:meth:`~set_value`.
 
@@ -590,7 +590,7 @@ class Factor:
         output._levels = new_levels
         return output
 
-    def set_levels(self, levels: Union[str, Sequence[str]], remap: bool = True, in_place: bool = False) -> Factor:
+    def set_levels(self, levels: str | Sequence[str], remap: bool = True, in_place: bool = False) -> Factor:
         """
         Alias for :py:meth:`~remap_levels` if ``remap = True``, otherwise an
         alias for :py:meth:`~replace_levels`. The first alias is deprecated and
@@ -602,7 +602,7 @@ class Factor:
         else:
             return self.replace_levels(levels, in_place=in_place)
 
-    def remap_levels(self, levels: Union[str, Sequence[str]], in_place: bool = False) -> Factor:
+    def remap_levels(self, levels: str | Sequence[str], in_place: bool = False) -> Factor:
         """Remap codes to a replacement list of levels. Each entry of the
         remapped ``Factor`` will refer to the same string across the old and
         new levels, provided that string is present in both sets of levels.
@@ -725,10 +725,10 @@ class Factor:
     @staticmethod
     def from_sequence(
         x: Sequence[str],
-        levels: Optional[Sequence[str]] = None,
+        levels: Sequence[str] | None = None,
         sort_levels: bool = True,
         ordered: bool = False,
-        names: Optional[Sequence[str]] = None,
+        names: Sequence[str] | None = None,
         **kwargs,
     ) -> Factor:
         """Convert a sequence of hashable values into a factor.
@@ -778,7 +778,7 @@ class Factor:
         """
         return [self._levels[c] if c >= 0 else None for c in self._codes]
 
-    def safe_delete(self, index: Union[int, str, slice], in_place: bool = False) -> Factor:
+    def safe_delete(self, index: int | str | slice, in_place: bool = False) -> Factor:
         """
         Args:
             index:
@@ -812,11 +812,11 @@ class Factor:
 
         return output
 
-    def delete(self, index: Union[int, str, slice]):
+    def delete(self, index: int | str | slice):
         """Alias for :py:meth:`~safe_delete` with ``in_place = True``."""
         self.safe_delete(index, in_place=True)
 
-    def __delitem__(self, index: Union[int, str, slice]):
+    def __delitem__(self, index: int | str | slice):
         """Alias for :py:meth:`~delete`."""
         self.delete(index)
 

@@ -1,6 +1,7 @@
 from functools import singledispatch
 from typing import Any
 
+
 @singledispatch
 def unlist(x: Any, **kwargs) -> Any:
     """Unlist a structured list-like container into a flat sequence.
@@ -16,7 +17,7 @@ def unlist(x: Any, **kwargs) -> Any:
     """
     if hasattr(x, "unlist"):
         return x.unlist(**kwargs)
-        
+
     if isinstance(x, (list, tuple)):
         flat = []
         for item in x:
@@ -25,5 +26,5 @@ def unlist(x: Any, **kwargs) -> Any:
             else:
                 flat.append(item)
         return type(x)(flat)
-        
+
     return x

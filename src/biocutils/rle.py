@@ -1,5 +1,7 @@
+from typing import Any
+
 import numpy as np
-from typing import Any, List, Union
+
 
 class Rle:
     def __init__(self, values: Any, lengths: Any = None):
@@ -32,7 +34,7 @@ class Rle:
         """Decompress Rle back to a dense numpy array."""
         return np.repeat(self.values, self.lengths)
 
-    def __getitem__(self, idx: Union[int, slice]) -> Any:
+    def __getitem__(self, idx: int | slice) -> Any:
         dense = self.to_numpy()
         return dense[idx]
 

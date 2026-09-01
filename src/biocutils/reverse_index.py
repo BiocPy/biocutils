@@ -1,4 +1,4 @@
-from typing import Sequence
+from collections.abc import Sequence
 
 
 def build_reverse_index(obj: Sequence[str]) -> dict:

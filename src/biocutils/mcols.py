@@ -1,6 +1,7 @@
 from functools import singledispatch
 from typing import Any
 
+
 @singledispatch
 def mcols(x: Any) -> Any:
     """Retrieve metadata columns from an object.
@@ -18,6 +19,7 @@ def mcols(x: Any) -> Any:
             return val()
         return val
     return None
+
 
 @singledispatch
 def set_mcols(x: Any, value: Any) -> Any:
@@ -42,6 +44,7 @@ def set_mcols(x: Any, value: Any) -> Any:
             pass
     raise TypeError(f"Cannot set mcols on type '{type(x).__name__}'")
 
+
 @singledispatch
 def metadata(x: Any) -> Any:
     """Retrieve general metadata from an object.
@@ -59,6 +62,7 @@ def metadata(x: Any) -> Any:
             return val()
         return val
     return None
+
 
 @singledispatch
 def set_metadata(x: Any, value: Any) -> Any:

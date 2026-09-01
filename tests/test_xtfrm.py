@@ -55,7 +55,7 @@ def test_xtfrm_GenomicRanges():
     )
     tx_gr = xtfrm(gr)
     assert len(tx_gr) == 3
-    
+
     o = order(gr)
     assert list(o) == [2, 0, 1]
 
@@ -66,7 +66,7 @@ def test_xtfrm_GenomicRanges():
 
 def test_xtfrm_DNAStringSet():
     dset = DNAStringSet(["ACGT", "TGCA", "ACGT"])
-    
+
     tx_dset = xtfrm(dset)
     assert tx_dset == ["ACGT", "TGCA", "ACGT"]
 
@@ -83,6 +83,6 @@ def test_xtfrm_RangedSummarizedExperiment():
         assays={"counts": np.random.rand(3, 2)},
         row_ranges=gr
     )
-    
+
     assert len(xtfrm(rse)) == 3
     assert list(order(rse)) == [2, 0, 1]

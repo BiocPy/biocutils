@@ -2,6 +2,7 @@ from typing import Any
 
 _relist_registry = {}
 
+
 def relist(flesh: Any, skeleton: Any, **kwargs) -> Any:
     """Relist a flat sequence into the structure/shape of a skeleton.
 
@@ -17,10 +18,10 @@ def relist(flesh: Any, skeleton: Any, **kwargs) -> Any:
     for cls in type(skeleton).__mro__:
         if cls in _relist_registry:
             return _relist_registry[cls](flesh, skeleton, **kwargs)
-            
+
     if hasattr(skeleton, "relist"):
         return skeleton.relist(flesh, **kwargs)
-        
+
     if isinstance(skeleton, (list, tuple)):
         res = []
         curr = 0
@@ -33,13 +34,16 @@ def relist(flesh: Any, skeleton: Any, **kwargs) -> Any:
                 res.append(flesh[curr])
                 curr += 1
         return type(skeleton)(res)
-        
+
     raise TypeError(f"No relist implementation found for skeleton type '{type(skeleton).__name__}'")
+
 
 def register(cls):
     def decorator(func):
         _relist_registry[cls] = func
         return func
+
     return decorator
+
 
 relist.register = register

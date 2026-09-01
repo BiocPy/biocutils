@@ -28,9 +28,9 @@ def test_unlist_relist_genomicranges():
         "ends": [105],
         "strand": ["+"]
     }))
-    
+
     grl = CompressedGenomicRangesList.from_list([gr1, gr2], names=["a", "b"])
-    
+
     flat = ut.unlist(grl)
     assert isinstance(flat, GenomicRanges)
     assert len(flat) == 3
@@ -44,7 +44,7 @@ def test_unlist_relist_genomicranges():
 
 def test_unlist_relist_biostrings():
     ds = DNAStringSet(["ACGT", "AAAA"])
-    
+
     flat = ut.unlist(ds)
     assert isinstance(flat, DNAString)
     assert str(flat) == "ACGTAAAA"
@@ -57,10 +57,10 @@ def test_unlist_relist_biostrings():
 def test_pmin_pmax():
     v1 = [1, 5, 3]
     v2 = [2, 4, 6]
-    
+
     min_res = ut.pmin(v1, v2)
     assert list(min_res) == [1, 4, 3]
-    
+
     max_res = ut.pmax(v1, v2)
     assert list(max_res) == [2, 5, 6]
 
@@ -71,7 +71,7 @@ def test_mcols_metadata():
         "ends": [15],
         "strand": ["+"]
     }))
-    
+
     mc = ut.mcols(gr)
     assert isinstance(mc, BiocFrame)
     assert len(mc.colnames) == 0
@@ -82,6 +82,6 @@ def test_mcols_metadata():
 
     meta = ut.metadata(gr)
     assert meta is None or len(meta) == 0
-    
+
     gr = ut.set_metadata(gr, {"author": "AI"})
     assert ut.metadata(gr)["author"] == "AI"
