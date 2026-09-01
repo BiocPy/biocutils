@@ -48,8 +48,6 @@ Source = "https://github.com/BiocPy/biocutils"
 [project.optional-dependencies]
 testing = [
     "pandas>=2.0.0",
-    "biocframe",
-    "iranges",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
     "scipy",
