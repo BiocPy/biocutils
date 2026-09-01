@@ -32,6 +32,7 @@ from .match import match, create_match_index, MatchIndex
 from .normalize_subscript import normalize_subscript, SubscriptTypes
 from .print_truncated import print_truncated, print_truncated_dict, print_truncated_list
 from .print_wrapped_table import create_floating_names, print_type, print_wrapped_table, truncate_strings
+from .setdiff import setdiff
 from .union import union
 
 from .combine import combine

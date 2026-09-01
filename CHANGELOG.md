@@ -1,12 +1,13 @@
 # Changelog
 
-## Version 0.4.0 - 0.4.1
+## Version 0.4.0 - 0.4.2
 
 - Implemented R's `split()` utility to split a sequence by a grouping factor.
 - Turn `match()` into a generic for specialization by other BiocPy classes.
 - Implement `duplicated()` generic for simple sequences and Factors.
 - Implement the `order()` verb for basic sequences, Factors.
 - Added verbose parameter to `is_package_installed`.
+- Added `setdiff` function for simple sequences and factors.
 
 ## Version 0.3.0 - 0.3.4
 
