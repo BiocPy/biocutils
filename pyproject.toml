@@ -9,14 +9,47 @@ authors = [
     { name = "Jayaram Kancherla", email = "jayaram.kancherla@gmail.com" },
 ]
 requires-python = ">=3.12"
+keywords = [
+    "bioinformatics",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Typing :: Typed",
+]
 dependencies = [
     "importlib-metadata>=9.0.0 ; python_full_version < '3.8'",
     "numpy>=2.5.2",
 ]
 
+
+[project.license]
+file = "LICENSE.txt"
+
+
+[project.urls]
+Homepage = "https://github.com/BiocPy/biocutils"
+Documentation = "https://biocpy.github.io/biocutils/"
+Source = "https://github.com/BiocPy/biocutils"
+"Bug Tracker" = "https://github.com/BiocPy/biocutils/issues"
+
 [project.optional-dependencies]
 testing = [
     "pandas>=3.0.5",
+    "biocframe",
+    "iranges",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
     "scipy>=1.18.1",
@@ -69,16 +102,4 @@ strict = true
 addopts = "--cov --cov-report term-missing"
 testpaths = [
     "tests",
-]
-
-[dependency-groups]
-dev = [
-    "pytest",
-    "pytest-cov",
-    "sphinx",
-    "myst-nb",
-    "furo",
-    "sphinx-autodoc-typehints",
-    "linkify-it-py",
-    "mypy",
 ]
