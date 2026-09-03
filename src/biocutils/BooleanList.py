@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Iterable, Optional, Sequence, Union
+from collections.abc import Iterable, Sequence
+from typing import Any
 
 from .NamedList import NamedList
 from .Names import Names
@@ -23,7 +24,7 @@ class _SubscriptCoercer:
         """
         self._data = data
 
-    def __getitem__(self, index: int) -> Optional[bool]:
+    def __getitem__(self, index: int) -> bool | None:
         """Get an item and coerce it to boolean.
 
         Args:
@@ -46,8 +47,8 @@ class BooleanList(NamedList):
 
     def __init__(
         self,
-        data: Optional[Sequence] = None,
-        names: Optional[Names] = None,
+        data: Sequence | None = None,
+        names: Names | None = None,
         _validate: bool = True,
     ):
         """
@@ -76,7 +77,7 @@ class BooleanList(NamedList):
 
         super().__init__(data, names, _validate=_validate)
 
-    def set_value(self, index: Union[int, str], value: Any, in_place: bool = False) -> BooleanList:
+    def set_value(self, index: int | str, value: Any, in_place: bool = False) -> BooleanList:
         """Calls :py:meth:`~biocutils.NamedList.NamedList.set_value` after coercing ``value`` to a boolean."""
         return super().set_value(index, _coerce_to_bool(value), in_place=in_place)
 
@@ -84,7 +85,7 @@ class BooleanList(NamedList):
         """Calls :py:meth:`~biocutils.NamedList.NamedList.set_slice` after coercing ``value`` to booleans."""
         return super().set_slice(index, _SubscriptCoercer(value), in_place=in_place)
 
-    def safe_insert(self, index: Union[int, str], value: Any, in_place: bool = False) -> BooleanList:
+    def safe_insert(self, index: int | str, value: Any, in_place: bool = False) -> BooleanList:
         """Calls :py:meth:`~biocutils.NamedList.NamedList.safe_insert` after coercing ``value`` to a boolean."""
         return super().safe_insert(index, _coerce_to_bool(value), in_place=in_place)
 

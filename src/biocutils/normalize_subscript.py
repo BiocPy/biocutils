@@ -1,4 +1,5 @@
-from typing import Any, Optional, Sequence, Tuple, Union
+from collections.abc import Sequence
+from typing import Any, Union
 
 import numpy
 
@@ -63,9 +64,9 @@ SubscriptTypes = Union[slice, range, Sequence, int, str, bool, NormalizedSubscri
 def normalize_subscript(
     sub: SubscriptTypes,
     length: int,
-    names: Optional[Sequence[str]] = None,
+    names: Sequence[str] | None = None,
     non_negative_only: bool = True,
-) -> Tuple[Sequence[int], bool]:
+) -> tuple[Sequence[int], bool]:
     """Normalize a subscript into a sequence of integer indices.
 
     Normalize a subscript for ``__getitem__`` or friends into a sequence of

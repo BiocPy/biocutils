@@ -1,4 +1,4 @@
-from typing import Callable, Dict, List, Optional
+from collections.abc import Callable
 
 
 def print_truncated(x, truncated_to: int = 3, full_threshold: int = 10) -> str:
@@ -28,10 +28,10 @@ def print_truncated(x, truncated_to: int = 3, full_threshold: int = 10) -> str:
 
 
 def print_truncated_list(
-    x: List,
+    x: list,
     truncated_to: int = 3,
     full_threshold: int = 10,
-    transform: Optional[Callable] = None,
+    transform: Callable | None = None,
     sep: str = ", ",
     include_brackets: bool = True,
 ) -> str:
@@ -87,10 +87,10 @@ def print_truncated_list(
 
 
 def print_truncated_dict(
-    x: Dict,
+    x: dict,
     truncated_to: int = 3,
     full_threshold: int = 10,
-    transform: Optional[Callable] = None,
+    transform: Callable | None = None,
     sep: str = ", ",
     include_brackets: bool = True,
 ) -> str:

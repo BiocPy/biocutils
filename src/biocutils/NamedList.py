@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Sequence
 from copy import deepcopy
-from typing import Any, Dict, Iterable, Optional, Sequence, Tuple, Union
+from typing import Any
 
 from .assign_sequence import assign_sequence
 from .combine_sequences import combine_sequences
@@ -23,8 +24,8 @@ class NamedList:
 
     def __init__(
         self,
-        data: Optional[Sequence] = None,
-        names: Optional[Names] = None,
+        data: Sequence | None = None,
+        names: Names | None = None,
         _validate: bool = True,
     ):
         """
@@ -68,7 +69,7 @@ class NamedList:
         """
         return len(self._data)
 
-    def __iter__(self) -> "list_iterator":
+    def __iter__(self) -> list_iterator:
         """
         Returns:
             An iterator on the underlying list of data.
@@ -114,7 +115,7 @@ class NamedList:
     #####>>>> Get/set names <<<<#####
     #################################
 
-    def get_names(self) -> Optional[Names]:
+    def get_names(self) -> Names | None:
         """
         Returns:
             Names for the list elements.
@@ -125,14 +126,14 @@ class NamedList:
         return self._names
 
     @property
-    def names(self) -> Optional[Names]:
+    def names(self) -> Names | None:
         """Alias for :py:meth:`~get_names`."""
         return self.get_names()
 
     def _shallow_copy(self):
         return type(self)(self._data, self._names, _validate=False)
 
-    def set_names(self, names: Optional[Names], in_place: bool = False) -> NamedList:
+    def set_names(self, names: Names | None, in_place: bool = False) -> NamedList:
         """
         Args:
             names:
@@ -153,7 +154,7 @@ class NamedList:
         output._names = _sanitize_names(names, len(self))
         return output
 
-    def get_name(self, index: int) -> Optional[str]:
+    def get_name(self, index: int) -> str | None:
         """Get name at an index.
 
         Args:
@@ -171,7 +172,7 @@ class NamedList:
     #####>>>> Get/set items <<<<#####
     #################################
 
-    def get_value(self, index: Union[str, int]) -> Any:
+    def get_value(self, index: str | int) -> Any:
         """Get value at an index.
 
         Args:
@@ -207,7 +208,7 @@ class NamedList:
             outnames = subset_sequence(self._names, index)
         return type(self)(outdata, outnames, _validate=False)
 
-    def __getitem__(self, index: SubscriptTypes) -> Union[NamedList, Any]:
+    def __getitem__(self, index: SubscriptTypes) -> NamedList | Any:
         """
         If ``index`` is a scalar, this is an alias for :py:meth:`~get_value`.
 
@@ -219,7 +220,7 @@ class NamedList:
         else:
             return self.get_slice(NormalizedSubscript(index))
 
-    def set_value(self, index: Union[str, int], value: Any, in_place: bool = False) -> NamedList:
+    def set_value(self, index: str | int, value: Any, in_place: bool = False) -> NamedList:
         """
         Args:
             index:
@@ -335,7 +336,7 @@ class NamedList:
         else:
             return self.copy()
 
-    def safe_insert(self, index: Union[int, str], value: Any, in_place: bool = False) -> NamedList:
+    def safe_insert(self, index: int | str, value: Any, in_place: bool = False) -> NamedList:
         """
         Args:
             index:
@@ -363,7 +364,7 @@ class NamedList:
             output._names.insert(index, "")
         return output
 
-    def insert(self, index: Union[int, str], value: Any):
+    def insert(self, index: int | str, value: Any):
         """Alias for :py:meth:`~safe_insert` with ``in_place = True``."""
         self.safe_insert(index, value, in_place=True)
 
@@ -435,7 +436,7 @@ class NamedList:
         self.extend(other)
         return self
 
-    def safe_delete(self, index: Union[int, str, slice], in_place: bool = False) -> NamedList:
+    def safe_delete(self, index: int | str | slice, in_place: bool = False) -> NamedList:
         """
         Args:
             index:
@@ -468,11 +469,11 @@ class NamedList:
 
         return output
 
-    def delete(self, index: Union[int, str, slice]):
+    def delete(self, index: int | str | slice):
         """Alias for :py:meth:`~safe_delete` with ``in_place = True``."""
         self.safe_delete(index, in_place=True)
 
-    def __delitem__(self, index: Union[int, str, slice]):
+    def __delitem__(self, index: int | str | slice):
         """Alias for :py:meth:`~delete`."""
         self.delete(index)
 
@@ -496,7 +497,7 @@ class NamedList:
         """
         return iter(self._data)
 
-    def items(self) -> Iterable[Tuple[str, Any]]:
+    def items(self) -> Iterable[tuple[str, Any]]:
         """
         Returns:
             Iterator over (name, value) pairs.
@@ -507,7 +508,7 @@ class NamedList:
         else:
             return zip((str(i) for i in range(len(self))), self._data)
 
-    def get(self, key: Union[str, int], default: Any = None) -> Any:
+    def get(self, key: str | int, default: Any = None) -> Any:
         """
         Args:
             key:
@@ -576,7 +577,7 @@ class NamedList:
         """
         return self._data
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """
         Returns:
             A dictionary where the keys are the names and the values are the
@@ -611,7 +612,7 @@ class NamedList:
             A instance where the list elements are the values of
             ``x`` and the names are the stringified keys.
         """
-        return cls(list(x.values()), names=Names(str(y) for y in x.keys()))
+        return cls(list(x.values()), names=Names(str(y) for y in x))
 
 
 @subset_sequence.register

@@ -1,4 +1,5 @@
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from .is_high_dimensional import is_high_dimensional
 from .subset_rows import subset_rows

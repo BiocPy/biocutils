@@ -1,18 +1,19 @@
-from typing import Any, Union, Sequence, Optional
+from collections.abc import Sequence
 from functools import singledispatch
+from typing import Any
 
 import numpy
 
-from .subset import subset
 from .Factor import Factor
+from .subset import subset
 
 
 @singledispatch
 def order(
     x: Any,
-    force_last: Union[set, Sequence] = [None, numpy.ma.masked, numpy.nan],
+    force_last: set | Sequence = [None, numpy.ma.masked, numpy.nan],
     decreasing: bool = False,
-    dtype: Optional[numpy.dtype] = None,
+    dtype: numpy.dtype | None = None,
 ) -> numpy.ndarray:
     """
     Obtain an ordering of entries of ``x``.
@@ -150,9 +151,9 @@ def order(
 @order.register
 def _order_Factor(
     x: Factor,
-    force_last: Union[set, Sequence] = set([None]),
+    force_last: set | Sequence = set([None]),
     decreasing: bool = False,
-    dtype: Optional[numpy.dtype] = None,
+    dtype: numpy.dtype | None = None,
 ) -> numpy.ndarray:
     new_force_last = set()
     for i, lev in enumerate(x.get_levels()):
@@ -166,7 +167,7 @@ def _order_Factor(
 
 
 @singledispatch
-def sort(x: Any, force_last: Union[set, Sequence] = [None, numpy.ma.masked], decreasing: bool = False) -> Any:
+def sort(x: Any, force_last: set | Sequence = [None, numpy.ma.masked], decreasing: bool = False) -> Any:
     """
     Sort an arbitrary iterable sequence.
 

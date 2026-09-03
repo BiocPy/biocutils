@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from functools import singledispatch
-from typing import Any, Literal, Optional, Sequence, Union
+from typing import Any, Literal
 
 import numpy
 
@@ -14,9 +15,9 @@ class MatchIndex:
         self,
         targets: Any,
         duplicate_method: Literal["first", "last", "any"] = "first",
-        incomparables: Union[set, Sequence] = set(),
-        dtype: Optional[numpy.dtype] = None,
-        fail_missing: Optional[bool] = None,
+        incomparables: set | Sequence = set(),
+        dtype: numpy.dtype | None = None,
+        fail_missing: bool | None = None,
     ):
         """
         Args:
@@ -141,9 +142,9 @@ class MatchIndex:
 def create_match_index(
     targets: Any,
     duplicate_method: Literal["first", "last", "any"] = "first",
-    incomparables: Union[set, Sequence] = set(),
-    dtype: Optional[numpy.dtype] = None,
-    fail_missing: Optional[bool] = None,
+    incomparables: set | Sequence = set(),
+    dtype: numpy.dtype | None = None,
+    fail_missing: bool | None = None,
 ) -> MatchIndex:
     """
     Create a index for matching an arbitrary sequence against ``targets``.
@@ -229,9 +230,9 @@ def match(
     x: Any,
     targets: Any,
     duplicate_method: Literal["first", "last", "any"] = "first",
-    incomparables: Union[set, Sequence] = set(),
-    dtype: Optional[numpy.dtype] = None,
-    fail_missing: Optional[bool] = None,
+    incomparables: set | Sequence = set(),
+    dtype: numpy.dtype | None = None,
+    fail_missing: bool | None = None,
 ) -> numpy.ndarray:
     """
     Find a matching value of each element of ``x`` in ``targets``.

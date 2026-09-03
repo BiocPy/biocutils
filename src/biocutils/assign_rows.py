@@ -1,6 +1,7 @@
+from collections.abc import Sequence
 from copy import deepcopy
 from functools import singledispatch
-from typing import Any, Sequence
+from typing import Any
 
 import numpy
 
