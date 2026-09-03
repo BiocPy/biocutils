@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.5.0
+
+- Migate the package to `hatch`.
+
 ## Version 0.4.0 - 0.4.2
 
 - Implemented R's `split()` utility to split a sequence by a grouping factor.
