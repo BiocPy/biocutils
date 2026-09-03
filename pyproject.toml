@@ -6,6 +6,7 @@ dynamic = [
 description = "Utilities to use across the biocpy packages."
 readme = "README.md"
 authors = [
+    { name = "Aaron Lun", email = "infinite.monkeys.with.keyboards@gmail.com"},
     { name = "Jayaram Kancherla", email = "jayaram.kancherla@gmail.com" },
 ]
 requires-python = ">=3.9"
