@@ -3,7 +3,7 @@
 ## Version 0.5.0 - 0.5.1
 
 - Migate the package to `hatch`.
-- Add index and list based methods to `Names` and `NamedList` classes. 
+- Add index and list based methods to `Names` and `NamedList` classes.
 
 ## Version 0.4.0 - 0.4.2
 
