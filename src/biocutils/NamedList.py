@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Iterable, Sequence
+from collections.abc import Callable, Iterable, Sequence
 from copy import deepcopy
 from typing import Any
 
@@ -110,6 +110,21 @@ class NamedList:
         if not isinstance(other, NamedList):
             return False
         return self._data == other._data and self._names == other._names
+
+    def __contains__(self, value: Any) -> bool:
+        """Return whether ``value`` is present in the list."""
+        return value in self._data
+
+    def index(self, value: Any, start: int = 0, stop: int | None = None) -> int:
+        """Return the index of the first occurrence of ``value``."""
+        if stop is None:
+            return self._data.index(value, start)
+
+        return self._data.index(value, start, stop)
+
+    def count(self, value: Any) -> int:
+        """Return the number of occurrences of ``value``."""
+        return self._data.count(value)
 
     #################################
     #####>>>> Get/set names <<<<#####
@@ -476,6 +491,65 @@ class NamedList:
     def __delitem__(self, index: int | str | slice):
         """Alias for :py:meth:`~delete`."""
         self.delete(index)
+
+    def pop(self, index: int = -1) -> Any:
+        """Remove and return the item at ``index``."""
+        value = self._data.pop(index)
+        if self._names is not None:
+            self._names.delete(index)
+
+        return value
+
+    def remove(self, value: Any) -> None:
+        """Remove the first occurrence of ``value``."""
+        self.pop(self._data.index(value))
+
+    def clear(self) -> None:
+        """Remove all items and names."""
+        self._data.clear()
+
+        if self._names is not None:
+            self._names.clear()
+
+    def reverse(self) -> None:
+        """Reverse the items and their names in place."""
+        self._data.reverse()
+
+        if self._names is not None:
+            self._names.reverse()
+
+    def sort(self, *, key: Callable[[Any], Any] | None = None, reverse: bool = False) -> None:
+        """Sort the items in place, keeping their names attached."""
+        if self._names is None:
+            self._data.sort(key=key, reverse=reverse)
+            return
+
+        paired = list(zip(self._names, self._data))
+        paired.sort(key=(lambda item: key(item[1])) if key is not None else (lambda item: item[1]), reverse=reverse)
+        self._names._wipe_reverse_index()
+        self._names._names[:] = [name for name, _ in paired]
+        self._data[:] = [value for _, value in paired]
+
+    def __mul__(self, n: int) -> NamedList:
+        """Return a new ``NamedList`` containing ``n`` repetitions."""
+        names = None
+        if self._names is not None:
+            names = Names(self._names.as_list() * n, _validate=False)
+
+        return type(self)(self._data * n, names=names, _validate=False)
+
+    def __rmul__(self, n: int) -> NamedList:
+        """Alias for :py:meth:`__mul__`."""
+        return self * n
+
+    def __imul__(self, n: int) -> NamedList:
+        """Repeat the items and names in place ``n`` times."""
+        self._data *= n
+        if self._names is not None:
+            self._names._names *= n
+            self._names._wipe_reverse_index()
+
+        return self
 
     #####################################
     #####>>>> dict like methods <<<<#####

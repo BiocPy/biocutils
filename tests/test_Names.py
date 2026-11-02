@@ -257,3 +257,34 @@ def test_Names_is_unique():
 
     empty = Names([])
     assert empty.is_unique
+
+
+def test_Names_list_methods():
+    x = Names(["B", "A", "B", "C"])
+    assert x.index("B") == 0
+    assert x.index("B", 1) == 2
+    assert x.index("B", 1, 3) == 2
+    assert x.count("B") == 2
+    with pytest.raises(ValueError):
+        x.index("missing")
+
+    assert x.pop(1) == "A"
+    assert x.as_list() == ["B", "B", "C"]
+    assert x.map("C") == 2
+    x.remove("B")
+    assert x.as_list() == ["B", "C"]
+    assert x.pop() == "C"
+
+    x.reverse()
+    assert x.as_list() == ["B"]
+    assert (x * 2).as_list() == ["B", "B"]
+    assert (2 * x).as_list() == ["B", "B"]
+    x *= 2
+    assert x.as_list() == ["B", "B"]
+    x.extend(["A", "C"])
+    x.map("C")
+    x.sort(reverse=True)
+    assert x.as_list() == ["C", "B", "B", "A"]
+    assert x.map("C") == 0
+    x.clear()
+    assert x.as_list() == []

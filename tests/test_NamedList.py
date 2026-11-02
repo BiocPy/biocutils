@@ -330,3 +330,54 @@ def test_NamedList_dict_methods():
     assert list(y.keys()) == []
     assert list(y.values()) == [10, 20]
     assert list(y.items()) == [("0", 10), ("1", 20)]
+
+
+def test_NamedList_list_methods():
+    x = NamedList([3, 1, 3, 2], names=["C", "A", "D", "B"])
+    assert 1 in x
+    assert 5 not in x
+    assert x.index(3) == 0
+    assert x.index(3, 1) == 2
+    assert x.index(3, 1, 3) == 2
+    assert x.count(3) == 2
+    with pytest.raises(ValueError):
+        x.index(5)
+
+    assert x.pop(1) == 1
+    assert x.as_list() == [3, 3, 2]
+    assert x.get_names().as_list() == ["C", "D", "B"]
+    x.remove(3)
+    assert x.as_list() == [3, 2]
+    assert x.get_names().as_list() == ["D", "B"]
+    assert x.pop() == 2
+    assert x.get_names().as_list() == ["D"]
+
+    x = NamedList([3, 1, 2], names=["C", "A", "B"])
+    x.get_names().map("A")
+    x.reverse()
+    assert x.as_list() == [2, 1, 3]
+    assert x.get_names().as_list() == ["B", "A", "C"]
+    assert x.get_names().map("A") == 1
+    x.sort()
+    assert x.as_list() == [1, 2, 3]
+    assert x.get_names().as_list() == ["A", "B", "C"]
+    x.sort(key=lambda value: -value)
+    assert x.as_list() == [3, 2, 1]
+    assert x.get_names().as_list() == ["C", "B", "A"]
+
+    assert (x * 2).as_list() == [3, 2, 1, 3, 2, 1]
+    assert (x * 2).get_names().as_list() == ["C", "B", "A", "C", "B", "A"]
+    assert (2 * x).get_names().as_list() == ["C", "B", "A", "C", "B", "A"]
+    x *= 2
+    assert x.as_list() == [3, 2, 1, 3, 2, 1]
+    assert x.get_names().as_list() == ["C", "B", "A", "C", "B", "A"]
+    x.clear()
+    assert x.as_list() == []
+    assert x.get_names().as_list() == []
+
+    unnamed = NamedList([1, 2])
+    unnamed.reverse()
+    unnamed.sort(reverse=True)
+    unnamed *= 0
+    assert unnamed.as_list() == []
+    assert unnamed.get_names() is None
