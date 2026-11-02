@@ -133,6 +133,17 @@ class Names:
         """
         return self.map(name) >= 0
 
+    def index(self, value: str, start: int = 0, stop: int | None = None) -> int:
+        """Return the index of the first matching name."""
+        if stop is None:
+            return self._names.index(value, start)
+
+        return self._names.index(value, start, stop)
+
+    def count(self, value: str) -> int:
+        """Return the number of occurrences of ``value``."""
+        return self._names.count(value)
+
     #################################
     #####>>>> Get/set items <<<<#####
     #################################
@@ -368,6 +379,46 @@ class Names:
     def __delitem__(self, index: int | slice):
         """Alias for :py:attr:`~delete`."""
         self.delete(index)
+
+    def pop(self, index: int = -1) -> str:
+        """Remove and return the name at ``index``."""
+        self._wipe_reverse_index()
+        return self._names.pop(index)
+
+    def remove(self, value: str) -> None:
+        """Remove the first occurrence of ``value``."""
+        index = self._names.index(value)
+        self.pop(index)
+
+    def clear(self) -> None:
+        """Remove all names."""
+        self._wipe_reverse_index()
+        self._names.clear()
+
+    def reverse(self) -> None:
+        """Reverse the names in place."""
+        self._wipe_reverse_index()
+        self._names.reverse()
+
+    def sort(self, *, key: Callable[[str], Any] | None = None, reverse: bool = False) -> None:
+        """Sort the names in place."""
+        self._wipe_reverse_index()
+        self._names.sort(key=key, reverse=reverse)
+
+    def __mul__(self, n: int) -> Names:
+        """Return a new ``Names`` object containing ``n`` repetitions."""
+        return type(self)(self._names * n, _validate=False)
+
+    def __rmul__(self, n: int) -> Names:
+        """Alias for :py:meth:`__mul__`."""
+        return self * n
+
+    def __imul__(self, n: int) -> Names:  # noqa: PYI034
+        """Repeat the names in place ``n`` times."""
+        self._wipe_reverse_index()
+        self._names *= n
+
+        return self
 
     ################################
     #####>>>> Copy methods <<<<#####
