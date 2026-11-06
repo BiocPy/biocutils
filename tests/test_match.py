@@ -11,6 +11,11 @@ def test_match_simple():
     assert list(mm) == [3, 1, 2, 0, 3, 3, 1, 0, 2]
     assert mm.dtype == numpy.dtype("int8")
 
+    # Force it to use a larger type.
+    mm = match(x, levels + [str(i) for i in range(125)])
+    assert list(mm) == [3, 1, 2, 0, 3, 3, 1, 0, 2]
+    assert mm.dtype == numpy.dtype("int16")
+
     mm = match(x, levels, fail_missing=True, dtype=numpy.uint32)
     assert list(mm) == [3, 1, 2, 0, 3, 3, 1, 0, 2]
     assert mm.dtype == numpy.dtype("uint32")

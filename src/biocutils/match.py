@@ -45,6 +45,9 @@ class MatchIndex:
 
             warnings.warn(DeprecationWarning("'map_to_index()' is deprecated, use 'create_match_index()' instead"))
             self._map = targets
+            upper_bound = 0
+            for x in targets.values():
+                upper_bound = max(upper_bound, x + 1)
 
         elif isinstance(targets, Factor):
             # Optimized method when both x and targets are factors.
@@ -68,6 +71,7 @@ class MatchIndex:
                     mapping[None] = target_index[-1]
 
             self._map = mapping
+            upper_bound = len(targets)
 
         else:
             first_tie = duplicate_method == "first" or duplicate_method == "any"
@@ -77,9 +81,10 @@ class MatchIndex:
                     if not first_tie or val not in mapping:
                         mapping[val] = i
             self._map = mapping
+            upper_bound = len(targets)
 
         if dtype is None:
-            dtype = numpy.min_scalar_type(-len(targets))  # get a signed type
+            dtype = numpy.min_scalar_type(-upper_bound) # get a signed type to store -1 for missing values.
         self._dtype = dtype
 
         if fail_missing is None:
