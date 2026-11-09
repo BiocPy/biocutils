@@ -84,7 +84,7 @@ class MatchIndex:
             upper_bound = len(targets)
 
         if dtype is None:
-            dtype = numpy.min_scalar_type(-upper_bound) # get a signed type to store -1 for missing values.
+            dtype = numpy.min_scalar_type(-upper_bound)  # get a signed type to store -1 for missing values.
         self._dtype = dtype
 
         if fail_missing is None:
